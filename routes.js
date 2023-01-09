@@ -1,0 +1,21 @@
+const jwt = require('jsonwebtoken')
+const verifyToken = require('./verifyToken')
+const User=require('./controllers/users')
+const Post=require('./controllers/posts')
+const Comment=require('./controllers/comments')
+const router = require('express').Router()
+
+router.post('/authenticate',User.create)
+router.get('/authenticate',User.find)
+router.get('/user',verifyToken,User.find)
+router.post('/posts',verifyToken,Post.create)
+router.post('/follow/:id',verifyToken,User.follow)
+router.post('/unfollow/:id',verifyToken,User.unfollow)
+router.delete('/posts/:id',verifyToken,Post.delete)
+router.post('/comment/:id',verifyToken,Comment.create)
+router.post('/like/:id',verifyToken,Post.like)
+router.post('/unlike/:id',verifyToken,Post.unlike)
+router.get('/posts/:id',verifyToken,Post.find)
+router.get('/all_posts',verifyToken,User.postsByUser)
+
+module.exports=router;
